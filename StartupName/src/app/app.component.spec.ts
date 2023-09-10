@@ -2,9 +2,11 @@ import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    declarations: [AppComponent]
-  }));
+  beforeEach(() =>
+    TestBed.configureTestingModule({
+      declarations: [AppComponent],
+    })
+  );
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
@@ -12,16 +14,27 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'StartupName'`, () => {
+  it('should generate startup names with prefixes', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('StartupName');
+    app.generate();
+    const name = app.name;
+
+    const prefixFound = app.prefixes.some((prefix) => name.startsWith(prefix));
+    expect(prefixFound)
+      .withContext(`Expected "${name}" to start with one of the prefixes.`)
+      .toBeTrue();
   });
 
-  it('should render title', () => {
+  it('should generate startup names with suffixes', () => {
     const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('StartupName app is running!');
+    const app = fixture.componentInstance;
+    app.generate();
+    const name = app.name;
+
+    const suffixFound = app.suffixes.some((suffix) => name.endsWith(suffix));
+    expect(suffixFound)
+      .withContext(`Expected "${name}" to end with one of the suffixes.`)
+      .toBeTrue();
   });
 });
