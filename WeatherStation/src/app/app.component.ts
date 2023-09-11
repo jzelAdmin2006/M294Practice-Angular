@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { map } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -34,5 +34,9 @@ export class AppComponent {
 
   private roundTo2Digits(value: number): number {
     return Math.round(value * 100) / 100;
+  }
+
+  ngOnDestroy(): void {
+    this.temperatureCelsiusSubject.complete();
   }
 }

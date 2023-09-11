@@ -60,4 +60,9 @@ export class AppComponent {
       },
     ]);
   }
+
+  ngOnDestroy(): void {
+    this.bitcoinPriceSubject.complete();
+    this.investmentsSubject.complete();
+  }
 }
